@@ -1,38 +1,39 @@
 #include <sqlite3.h>
 #include "tarefa_repositorio.hpp"
 
+void tarefa_repositorio::fechar(){
+    if(db != nullptr){
+        sqlite3_close(db);
+        db = nullptr;
+    }
+}
 
+bool tarefa_repositorio::conectar(){
+    if(db!=nullptr){
+        fechar();
+    }
 
-class tarefa_repositorio : public tarefa_base {
-        private:
-                sqlite3 *db = nullptr;
-        public:
-                
-                tarefa_repositorio()=default;
+    int rc = sqlite3_open("tarefas.db", &db);
 
-                ~tarefa_repositorio(){
-                        fechar();
-                }
+    if(rc!=SQLITE_OK){
+        fechar();
+        return false;
+    }
+    return true;
+}
 
-                void fechar(){
-                    if(db != nullptr){
-                        sqlite3_close(db);
-                        db = nullptr;
-                    }
-                }
+void tarefa_repositorio::criar(){
+    // Implementação do método criar
+}
 
-                
-                bool conectar(){
-                    if(db!=nullptr){
-                        fechar();
-                    }
+void tarefa_repositorio::atualizar(){
+    // Implementação do método atualizar
+}
 
-                    int rc = sqlite3_open("tarefas.db", &db);
+void tarefa_repositorio::deletar(){
+    // Implementação do método deletar
+}
 
-                    if(rc!=SQLITE_OK){
-                        fechar();
-                        return false;
-                    }
-                    return true;
-                };
-};
+void tarefa_repositorio::buscar(){
+    // Implementação do método buscar
+}
